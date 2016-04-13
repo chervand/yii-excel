@@ -1,6 +1,6 @@
 # [PHPExcel](https://github.com/PHPOffice/PHPExcel) wrapper for [Yii Framework](https://github.com/yiisoft/yii)
 
-It supports export for IDataProvider objects, array of models and raw data arrays.
+It supports export for IDataProvider objects, array of models and raw data arrays to .xls, .xlsx, .html and .csv formats.
 
 ## Export
 
