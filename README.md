@@ -22,8 +22,8 @@ It supports export for IDataProvider objects, array of models and raw data array
 
 `export()` has 2 optional arguments: 
 
-    - save path without filename, defaults to `php://output`
-    - filename with extension, defaults to `.csv`
+ - save path without filename, defaults to `php://output`
+ - filename with extension, defaults to `.csv`
 
 ```php
     (new Excel)
