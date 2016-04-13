@@ -21,6 +21,7 @@ It supports export for IDataProvider objects, array of models and raw data array
 ### Output
 
 `export()` has 2 optional arguments: 
+
     - save path without filename, defaults to `php://output`
     - filename with extension, defaults to `.csv`
 
@@ -99,4 +100,4 @@ For retrieving safe attributes of exported models `search` scenario is used. It 
         ->export('worksheets.xlsx', $this->savePath);
 ```
 
-see `tests` for more examples
+See `tests` for more examples.
