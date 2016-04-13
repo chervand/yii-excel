@@ -1,4 +1,4 @@
-# [PHPExcel](https://github.com/PHPOffice/PHPExcel) wrapper for [Yii Framework](https://github.com/yiisoft/yii).
+# [PHPExcel](https://github.com/PHPOffice/PHPExcel) wrapper for [Yii Framework](https://github.com/yiisoft/yii)
 
 It supports export for IDataProvider objects, array of models and raw data arrays.
 
