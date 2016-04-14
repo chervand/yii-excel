@@ -71,8 +71,8 @@ class Excel extends CComponent
         }
 
         try {
-            call_user_func($callback, $worksheet, $data);
             $workbook->addSheet($worksheet);
+            call_user_func($callback, $worksheet, $data);
         } catch (PHPExcel_Exception $e) {
             throw $e;
         }
