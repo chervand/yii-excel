@@ -102,7 +102,6 @@ class ExcelTest extends Test
                 }
             )
             ->worksheet('CArrayDataProvider of raw data', new \CArrayDataProvider($arrayOfValues))
-            ->scenario('export')
             ->worksheet('CArrayDataProvider of models', new \CArrayDataProvider($arrayOfModels))
             ->worksheet('CActiveDataProvider + callback', new \CActiveDataProvider($this->modelClass),
                 function (\PHPExcel_Worksheet $worksheet, \CActiveDataProvider $dataProvider) {

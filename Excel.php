@@ -11,11 +11,10 @@
  *
  *  (new Excel)
  *      ->worksheet('Worksheet #1', [['col1', 'col2'], ['cell11', 'cell12'], ['cell21', 'cell22']],
- *          function (\PHPExcel_Worksheet $worksheet, array &$data) {
+ *          function (\PHPExcel_Worksheet $worksheet, array $data) {
  *              $worksheet->fromArray($data);
  *          }
  *      )
- *      ->scenario('export')
  *      ->worksheet('Worksheet #2', new \CActiveDataProvider('User'))
  *      ->export('/tmp/', 'export.xlsx');
  *
@@ -31,11 +30,6 @@ class Excel extends CComponent
     const FORMAT_XLSX = '.xlsx';
     const FORMAT_HTML = '.html';
     const FORMAT_CSV = '.csv';
-
-    /**
-     * @var string model scenario for retrieving safe attributes, defaults to 'search'
-     */
-    private $_scenario = 'search';
 
     /**
      * @var PHPExcel workbook object
@@ -105,7 +99,8 @@ class Excel extends CComponent
             $path .= $filename;
         }
 
-        $format = '.' . end(explode('.', $filename));
+        $format = explode('.', $filename);
+        $format = '.' . end($format);
         if (!in_array($format, [
             self::FORMAT_XLS,
             self::FORMAT_XLSX,
@@ -154,16 +149,6 @@ class Excel extends CComponent
     }
 
     /**
-     * @param $scenario
-     * @return $this
-     */
-    public function scenario($scenario)
-    {
-        $this->_scenario = $scenario;
-        return $this;
-    }
-
-    /**
      * Default callback worksheet which simply exports raw data without any formatting.
      *
      * @param PHPExcel_Worksheet $worksheet
@@ -177,13 +162,14 @@ class Excel extends CComponent
         $_data = [];
 
         if ($dataProvider instanceof \CActiveDataProvider) {
-            $_data[] = $dataProvider->model->attributeNames();
             foreach ($dataProvider->getData() as $model) {
                 if ($model instanceof \CActiveRecord) {
-                    $model->setScenario($this->_scenario);
-                    $_names = $model->getSafeAttributeNames();
-                    $_data[] = $model->getAttributes($_names);
+                    $_data[] = $model->getAttributes(null);
                 }
+            }
+            if (!empty($_data)) {
+                $_keys = array_keys($_data[0]);
+                $_data = array_merge([$_keys], $_data);
             }
             return $worksheet->fromArray($_data);
         }
@@ -198,9 +184,7 @@ class Excel extends CComponent
 
         foreach ($_data as $index => $value) {
             if ($value instanceof \CActiveRecord) {
-                $value->setScenario($this->_scenario);
-                $_names = $value->getSafeAttributeNames();
-                $_data[$index] = $value->getAttributes($_names);
+                $_data[$index] = $value->getAttributes(null);
             } elseif (
                 !is_array($value)
                 && !is_scalar($value)

@@ -9,11 +9,10 @@ It supports export for IDataProvider objects, array of models and raw data array
 ```php
     (new Excel)
         ->worksheet('Worksheet #1', [['col1', 'col2'], ['cell11', 'cell12'], ['cell21', 'cell22']],
-            function (\PHPExcel_Worksheet $worksheet, array &$data) {
+            function (\PHPExcel_Worksheet $worksheet, array $data) {
                 $worksheet->fromArray($data);
             }
         )
-        ->scenario('export')
         ->worksheet('Worksheet #2', new \CActiveDataProvider('User'))
         ->export('/tmp/', 'export.xlsx');
 ```
@@ -48,17 +47,6 @@ To add a sheet to the workbook call `worksheet()` with arguments:
     - PHPExcel_Worksheet object
     - variable passed as data to `worksheet()`
 
-### Scenario
-
-For retrieving safe attributes of exported models `search` scenario is used. It could be changed by calling `scenario()`.
- 
-```php
-    (new Excel)
-        ->scenario('export')
-        ->worksheet('Worksheet #1', new \CActiveDataProvider('User'))
-        ->export('/tmp/', 'export.xlsx');
-```
-
 ### Complete example
 
 ```php
@@ -84,7 +72,6 @@ For retrieving safe attributes of exported models `search` scenario is used. It 
             }
         )
         ->worksheet('CArrayDataProvider of raw data', new \CArrayDataProvider($arrayOfValues))
-        ->scenario('export')
         ->worksheet('CArrayDataProvider of models', new \CArrayDataProvider($arrayOfModels))
         ->worksheet('CActiveDataProvider + callback', new \CActiveDataProvider($this->modelClass),
             function (\PHPExcel_Worksheet $worksheet, \CActiveDataProvider $dataProvider) {
